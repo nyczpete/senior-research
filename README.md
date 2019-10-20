@@ -1,2 +1,4 @@
 # senior-research
-repo for senior research projecy
+repo for senior research project
+
+music practice aid program
