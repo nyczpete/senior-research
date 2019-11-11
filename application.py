@@ -1,7 +1,7 @@
 # 
 # Senior Research Project
 # Tan Dung Luong
-# Suntae Parks
+# Suntae Park
 #
 
 from midi import *
