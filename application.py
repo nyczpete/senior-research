@@ -1,11 +1,12 @@
 # 
 # Senior Research Project
 # Tan Dung Luong
-# Suntae Parks
+# Suntae Park
 #
 
 from midi import *
-from music import * 
+from music import *
+from gui import *
 
 # create midi input
 midiIn = MidiIn()     
