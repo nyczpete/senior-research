@@ -8,6 +8,7 @@ from midi import *
 from music import *
 from gui import *
 import random
+from datetime import *
 
 # create midi input
 midiIn = MidiIn()  
@@ -26,6 +27,9 @@ listOfNotes = []
 currentNote = 0
 score = 0
 
+#get current time
+currentTime = datetime.now()
+
 def printNote(eventType, channel, data1, data2):
    # eventType: 144 = start, 128 = stop
    # channel: only one channel for the moment, channel 0
@@ -36,10 +40,13 @@ def printNote(eventType, channel, data1, data2):
    global score
    global x
    global y
+   global currentTime
+   timeSinceLast = (datetime.now() - currentTime).total_seconds()
+   currentTime = datetime.now()
    if(currentNote < len(listOfNotes)):
       if(x >= 900):
          x = 0
-         y += 40
+         y += 70
       if(listOfNotes[currentNote] == MIDI_PITCHES[data1]):
          score += 1
          answer = TextField("Correct")
@@ -47,10 +54,14 @@ def printNote(eventType, channel, data1, data2):
          answer = TextField(MIDI_PITCHES[data1] + " Incorrect")
       currentNote += 1
       display.add(answer, x, y)
+      y += 20
+      time = TextField(str(timeSinceLast) + " s")
+      display.add(time, x, y)
+      y -= 20
       x += 80
    else:
       x = 0
-      y += 40
+      y += 70
       endcard = TextField("End")
       endcard2 = TextField("Score: " + str(score) + " out of " + str(len(listOfNotes)), 20)
       display.add(endcard, x, y)
@@ -70,7 +81,7 @@ def displayNotesToPlay(numberOfNotesToPlay):
    for noteToPlay in range(numberOfNotesToPlay):
       if(x >= 900):
          x = 0
-         y += 40
+         y += 70
       note = MIDI_PITCHES[random.randint(21, 108)]
       listOfNotes.append(note)
       noteDisplay = TextField(note) 
