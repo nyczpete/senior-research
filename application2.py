@@ -41,8 +41,11 @@ def printNote(eventType, channel, data1, data2):
    global x
    global y
    global currentTime
+   # time since last note was played
    timeSinceLast = (datetime.now() - currentTime).total_seconds()
+   # set current time to now
    currentTime = datetime.now()
+   # tracks current note needed to be played
    if(currentNote < len(listOfNotes)):
       if(x >= 900):
          x = 0
@@ -52,13 +55,18 @@ def printNote(eventType, channel, data1, data2):
          answer = TextField("Correct")
       else:
          answer = TextField(MIDI_PITCHES[data1] + " Incorrect")
-      currentNote += 1
+     
+      # displays if the correct note was played, if not, tells which note was played and incorrect message
       display.add(answer, x, y)
       y += 20
+      # displays time since last note was played
       time = TextField(str(timeSinceLast) + " s")
       display.add(time, x, y)
       y -= 20
       x += 80
+      
+      currentNote += 1
+   # if end of list, end and score
    else:
       x = 0
       y += 70
@@ -68,16 +76,17 @@ def printNote(eventType, channel, data1, data2):
       y += 40
       display.add(endcard2, x, y)
    print "Pitch = ", MIDI_PITCHES[data1]
-   
-# TODO: Write method to score user on matching requested notes
 
+# sets up notes to be played
 def displayNotesToPlay(numberOfNotesToPlay):
    global x
    global y
+   # display instructions
    instruction = TextField("Play the following notes:", 20)
    display.add(instruction)
    y += 40
    global listOfNotes
+   # creates random notes to be played
    for noteToPlay in range(numberOfNotesToPlay):
       if(x >= 900):
          x = 0
@@ -87,8 +96,10 @@ def displayNotesToPlay(numberOfNotesToPlay):
       noteDisplay = TextField(note) 
       display.add(noteDisplay, x, y)
       x += 80
+   # resets coordinates
+   x = 0
+   y = 60
 
-displayNotesToPlay(30)
-x = 0
-y = 60
+# start of program
+displayNotesToPlay(50)
 midiIn.onNoteOn(printNote)
