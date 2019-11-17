@@ -3,7 +3,8 @@
 repo for senior research project - Tan Dung Luong and Suntae Park
 
 music practice aid program
-using JythonMusic
+
+Run and test using: JythonMusic
 
 application.py is the first part of the app: play keys, and display the note
 
