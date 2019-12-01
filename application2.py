@@ -14,7 +14,7 @@ from datetime import *
 midiIn = MidiIn()  
 
 # create display
-display = Display("MIDI App - Senior Research", 1024, 768, 0, 0, Color.white)  
+display = Display("MIDI App - Senior Research", 1500, 1000, 0, 0, Color.white)  
 
 # coordinates
 x = 0
@@ -47,9 +47,9 @@ def printNote(eventType, channel, data1, data2):
    currentTime = datetime.now()
    # tracks current note needed to be played
    if(currentNote < len(listOfNotes)):
-      if(x >= 900):
-         x = 0
-         y += 70
+      if(x >= 1350):
+         x = 130
+         y += 416
       if(listOfNotes[currentNote] == MIDI_PITCHES[data1]):
          score += 1
          answer = TextField("Correct")
@@ -63,7 +63,7 @@ def printNote(eventType, channel, data1, data2):
       time = TextField(str(timeSinceLast) + " s")
       display.add(time, x, y)
       y -= 20
-      x += 80
+      x += 130
       
       currentNote += 1
    # if end of list, end and score
@@ -86,20 +86,26 @@ def displayNotesToPlay(numberOfNotesToPlay):
    display.add(instruction)
    y += 40
    global listOfNotes
+   clefs = Icon("clefs.png", 130, 366)
    # creates random notes to be played
+   display.add(clefs, x, y)
+   x += 130
    for noteToPlay in range(numberOfNotesToPlay):
-      if(x >= 900):
+      if(x >= 1350):
          x = 0
-         y += 70
+         y += 416
+         clefs = Icon("clefs.png", 130, 366)
+         display.add(clefs, x, y)
+         x += 130
       note = MIDI_PITCHES[random.randint(21, 108)]
       listOfNotes.append(note)
-      noteDisplay = TextField(note) 
+      noteDisplay = Icon(note + ".png", 130, 366)
       display.add(noteDisplay, x, y)
-      x += 80
+      x += 130
    # resets coordinates
-   x = 0
-   y = 60
+   x = 130
+   y = 396
 
 # start of program
-displayNotesToPlay(50)
+displayNotesToPlay(20)
 midiIn.onNoteOn(printNote)
