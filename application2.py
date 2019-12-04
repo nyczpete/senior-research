@@ -48,19 +48,24 @@ def printNote(eventType, channel, data1, data2):
    # tracks current note needed to be played
    if(currentNote < len(listOfNotes)):
       if(x >= 1350):
-         x = 130
+         x = 140
          y += 416
       if(listOfNotes[currentNote] == MIDI_PITCHES[data1]):
          score += 1
-         answer = TextField("Correct")
+         answer = Label("correct")
+         answer.setBackgroundColor(Color.GREEN)
       else:
-         answer = TextField(MIDI_PITCHES[data1] + " Incorrect")
-     
+         answer = Label(MIDI_PITCHES[data1] + " incorrect")
+         answer.setBackgroundColor(Color.RED)
+         
+      answer.setFont(Font("Helvetica", Font.BOLD, 16))
+      answer.setForegroundColor(Color.WHITE)     
       # displays if the correct note was played, if not, tells which note was played and incorrect message
       display.add(answer, x, y)
       y += 20
       # displays time since last note was played
-      time = TextField(str(timeSinceLast) + " s")
+      time = Label(str(timeSinceLast) + " s")
+      time.setBackgroundColor(Color.YELLOW)
       display.add(time, x, y)
       y -= 20
       x += 130
@@ -69,21 +74,28 @@ def printNote(eventType, channel, data1, data2):
    # if end of list, end and score
    else:
       x = 0
-      y += 70
-      endcard = TextField("End")
-      endcard2 = TextField("Score: " + str(score) + " out of " + str(len(listOfNotes)), 20)
-      display.add(endcard, x, y)
+      y += 60
+      endcard = Label("fin")
+      endcard.setFont(Font("Helvetica", Font.BOLD, 16))
+      endcard.setBackgroundColor(Color.BLACK)
+      endcard.setForegroundColor(Color.WHITE)
+      endcard2 = Label("Score: " + str(score) + " out of " + str(len(listOfNotes)))
+      endcard2.setFont(Font("Helvetica", Font.BOLD, 16))
+      endcard2.setBackgroundColor(Color.BLACK)
+      endcard2.setForegroundColor(Color.WHITE)
+      display.add(endcard, 200, y)
       y += 40
-      display.add(endcard2, x, y)
-   print "Pitch = ", MIDI_PITCHES[data1]
+      display.add(endcard2, 200, y)
 
 # sets up notes to be played
 def displayNotesToPlay(numberOfNotesToPlay):
    global x
    global y
    # display instructions
-   instruction = TextField("Play the following notes:", 20)
-   display.add(instruction)
+   instruction = Label("Play the following notes in order:")
+   instruction.setFont(Font("Helvetica", Font.BOLD, 20))
+   instruction.setForegroundColor(Color.GRAY)
+   display.add(instruction, 100, 5)
    y += 40
    global listOfNotes
    clefs = Icon("clefs.png", 130, 366)
